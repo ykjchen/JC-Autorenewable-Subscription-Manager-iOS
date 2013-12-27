@@ -1,0 +1,3 @@
+[submodule "RMStore"]
+	path = RMStore
+	url = git://github.com/robotmedia/RMStore.git
