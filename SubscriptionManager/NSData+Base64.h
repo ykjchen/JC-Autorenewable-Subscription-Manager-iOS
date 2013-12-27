@@ -21,6 +21,10 @@
 //     distribution.
 //
 
+//
+// From http://www.cocoawithlove.com/2009/06/base64-encoding-options-on-mac-and.html
+//
+
 #import <Foundation/Foundation.h>
 
 void *NewBase64Decode(
