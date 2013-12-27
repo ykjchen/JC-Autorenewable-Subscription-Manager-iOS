@@ -187,7 +187,8 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
         receipt = transaction.transactionReceipt;
     }
     
-    [self.receiptVerifier verifyReceipt:receipt];
+    [self.receiptVerifier verifyReceipt:receipt
+                             forProduct:transaction.payment.productIdentifier];
 }
 
 #pragma mark - Keychain Storage
