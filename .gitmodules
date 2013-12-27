@@ -1,3 +1,6 @@
 [submodule "RMStore"]
 	path = RMStore
 	url = git://github.com/robotmedia/RMStore.git
+[submodule "Lockbox"]
+	path = Lockbox
+	url = git://github.com/granoff/Lockbox.git
