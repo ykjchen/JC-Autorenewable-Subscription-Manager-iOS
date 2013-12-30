@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C403DB81871846400486A65 /* JCAppReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DA91871846400486A65 /* JCAppReceiptVerifier.m */; };
+		7C403DB91871846400486A65 /* JCLegacyReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DAB1871846400486A65 /* JCLegacyReceiptVerifier.m */; };
+		7C403DBA1871846400486A65 /* JCReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DAD1871846400486A65 /* JCReceiptVerifier.m */; };
+		7C403DBB1871846400486A65 /* JCStoreKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DAF1871846400486A65 /* JCStoreKitHelper.m */; };
+		7C403DBC1871846400486A65 /* JCSubscriptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DB11871846400486A65 /* JCSubscriptionManager.m */; };
+		7C403DBD1871846400486A65 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DB41871846400486A65 /* NSData+Base64.m */; };
+		7C403DBE1871846400486A65 /* ProductIdentifiers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C403DB51871846400486A65 /* ProductIdentifiers.plist */; };
+		7C403DBF1871846400486A65 /* SubscriptionManager-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C403DB61871846400486A65 /* SubscriptionManager-Info.plist */; };
 		7C5EB010183E466600DFF8EB /* Lockbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB00D183E466600DFF8EB /* Lockbox.m */; };
-		7C5EB014183E516800DFF8EB /* JCReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB013183E516800DFF8EB /* JCReceiptVerifier.m */; };
-		7C5EB017183E51F900DFF8EB /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB016183E51F900DFF8EB /* NSData+Base64.m */; };
 		7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB01B183FA31400DFF8EB /* Reachability.m */; };
-		7CA67E871860170000C393F1 /* JCLegacyReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA67E861860170000C393F1 /* JCLegacyReceiptVerifier.m */; };
-		7CA67E8B18606A6000C393F1 /* JCAppReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA67E8A18606A6000C393F1 /* JCAppReceiptVerifier.m */; };
-		7CA67E8E1860785500C393F1 /* JCStoreKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA67E8D1860785500C393F1 /* JCStoreKitHelper.m */; };
 		7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E92186173B700C393F1 /* StoreKit.framework */; };
 		7CA67E951861766900C393F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E941861766900C393F1 /* Security.framework */; };
 		7CC03ACB183905AE00DC6691 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CC03ACA183905AE00DC6691 /* Foundation.framework */; };
@@ -28,8 +31,6 @@
 		7CC03AE6183905AF00DC6691 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CC03ACE183905AE00DC6691 /* UIKit.framework */; };
 		7CC03AEE183905AF00DC6691 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7CC03AEC183905AF00DC6691 /* InfoPlist.strings */; };
 		7CC03AF0183905AF00DC6691 /* SubscriptionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC03AEF183905AF00DC6691 /* SubscriptionManagerTests.m */; };
-		7CC03AFB18390B9600DC6691 /* JCSubscriptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC03AFA18390B9600DC6691 /* JCSubscriptionManager.m */; };
-		7CD74084184F6E640026CC7D /* ProductIdentifiers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CD74083184F6E640026CC7D /* ProductIdentifiers.plist */; };
 		7CF1B210186DCAD1009D1EAC /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF1B1FE186DCAD1009D1EAC /* libcrypto.a */; };
 		7CF1B211186DCAD1009D1EAC /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CF1B1FF186DCAD1009D1EAC /* libssl.a */; };
 		7CF1B212186DCAD1009D1EAC /* RMAppReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1B201186DCAD1009D1EAC /* RMAppReceipt.m */; };
@@ -48,23 +49,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C403DA81871846400486A65 /* JCAppReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppReceiptVerifier.h; sourceTree = "<group>"; };
+		7C403DA91871846400486A65 /* JCAppReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppReceiptVerifier.m; sourceTree = "<group>"; };
+		7C403DAA1871846400486A65 /* JCLegacyReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLegacyReceiptVerifier.h; sourceTree = "<group>"; };
+		7C403DAB1871846400486A65 /* JCLegacyReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLegacyReceiptVerifier.m; sourceTree = "<group>"; };
+		7C403DAC1871846400486A65 /* JCReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCReceiptVerifier.h; sourceTree = "<group>"; };
+		7C403DAD1871846400486A65 /* JCReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCReceiptVerifier.m; sourceTree = "<group>"; };
+		7C403DAE1871846400486A65 /* JCStoreKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStoreKitHelper.h; sourceTree = "<group>"; };
+		7C403DAF1871846400486A65 /* JCStoreKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStoreKitHelper.m; sourceTree = "<group>"; };
+		7C403DB01871846400486A65 /* JCSubscriptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSubscriptionManager.h; sourceTree = "<group>"; };
+		7C403DB11871846400486A65 /* JCSubscriptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSubscriptionManager.m; sourceTree = "<group>"; };
+		7C403DB21871846400486A65 /* JCSubscriptionManagerConfigs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSubscriptionManagerConfigs.h; sourceTree = "<group>"; };
+		7C403DB31871846400486A65 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		7C403DB41871846400486A65 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		7C403DB51871846400486A65 /* ProductIdentifiers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProductIdentifiers.plist; sourceTree = "<group>"; };
+		7C403DB61871846400486A65 /* SubscriptionManager-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SubscriptionManager-Info.plist"; sourceTree = "<group>"; };
+		7C403DB71871846400486A65 /* SubscriptionManager-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SubscriptionManager-Prefix.pch"; sourceTree = "<group>"; };
 		7C5EB00B183E466600DFF8EB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7C5EB00C183E466600DFF8EB /* Lockbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lockbox.h; sourceTree = "<group>"; };
 		7C5EB00D183E466600DFF8EB /* Lockbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lockbox.m; sourceTree = "<group>"; };
 		7C5EB00E183E466600DFF8EB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		7C5EB012183E516800DFF8EB /* JCReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCReceiptVerifier.h; sourceTree = "<group>"; };
-		7C5EB013183E516800DFF8EB /* JCReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCReceiptVerifier.m; sourceTree = "<group>"; };
-		7C5EB015183E51F900DFF8EB /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		7C5EB016183E51F900DFF8EB /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		7C5EB01A183FA31400DFF8EB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		7C5EB01B183FA31400DFF8EB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		7C5EB01F183FC11E00DFF8EB /* JCSubscriptionManagerConfigs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCSubscriptionManagerConfigs.h; sourceTree = "<group>"; };
-		7CA67E851860170000C393F1 /* JCLegacyReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLegacyReceiptVerifier.h; sourceTree = "<group>"; };
-		7CA67E861860170000C393F1 /* JCLegacyReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLegacyReceiptVerifier.m; sourceTree = "<group>"; };
-		7CA67E8918606A6000C393F1 /* JCAppReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppReceiptVerifier.h; sourceTree = "<group>"; };
-		7CA67E8A18606A6000C393F1 /* JCAppReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppReceiptVerifier.m; sourceTree = "<group>"; };
-		7CA67E8C1860785500C393F1 /* JCStoreKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStoreKitHelper.h; sourceTree = "<group>"; };
-		7CA67E8D1860785500C393F1 /* JCStoreKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStoreKitHelper.m; sourceTree = "<group>"; };
 		7CA67E92186173B700C393F1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7CA67E941861766900C393F1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		7CC03AC7183905AE00DC6691 /* SubscriptionManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriptionManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,9 +89,6 @@
 		7CC03AEB183905AF00DC6691 /* SubscriptionManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SubscriptionManagerTests-Info.plist"; sourceTree = "<group>"; };
 		7CC03AED183905AF00DC6691 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7CC03AEF183905AF00DC6691 /* SubscriptionManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubscriptionManagerTests.m; sourceTree = "<group>"; };
-		7CC03AF918390B9600DC6691 /* JCSubscriptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSubscriptionManager.h; sourceTree = "<group>"; };
-		7CC03AFA18390B9600DC6691 /* JCSubscriptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSubscriptionManager.m; sourceTree = "<group>"; };
-		7CD74083184F6E640026CC7D /* ProductIdentifiers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProductIdentifiers.plist; sourceTree = "<group>"; };
 		7CF1B1B0186DCAD1009D1EAC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7CF1B1B2186DCAD1009D1EAC /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		7CF1B1B3186DCAD1009D1EAC /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
@@ -201,6 +204,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C403DA71871846400486A65 /* SubscriptionManager */ = {
+			isa = PBXGroup;
+			children = (
+				7C403DA81871846400486A65 /* JCAppReceiptVerifier.h */,
+				7C403DA91871846400486A65 /* JCAppReceiptVerifier.m */,
+				7C403DAA1871846400486A65 /* JCLegacyReceiptVerifier.h */,
+				7C403DAB1871846400486A65 /* JCLegacyReceiptVerifier.m */,
+				7C403DAC1871846400486A65 /* JCReceiptVerifier.h */,
+				7C403DAD1871846400486A65 /* JCReceiptVerifier.m */,
+				7C403DAE1871846400486A65 /* JCStoreKitHelper.h */,
+				7C403DAF1871846400486A65 /* JCStoreKitHelper.m */,
+				7C403DB01871846400486A65 /* JCSubscriptionManager.h */,
+				7C403DB11871846400486A65 /* JCSubscriptionManager.m */,
+				7C403DB21871846400486A65 /* JCSubscriptionManagerConfigs.h */,
+				7C403DB31871846400486A65 /* NSData+Base64.h */,
+				7C403DB41871846400486A65 /* NSData+Base64.m */,
+				7C403DB51871846400486A65 /* ProductIdentifiers.plist */,
+				7C403DB61871846400486A65 /* SubscriptionManager-Info.plist */,
+				7C403DB71871846400486A65 /* SubscriptionManager-Prefix.pch */,
+			);
+			path = SubscriptionManager;
+			sourceTree = "<group>";
+		};
 		7C5EB00A183E466600DFF8EB /* Lockbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,20 +287,7 @@
 			children = (
 				7CC03AD9183905AE00DC6691 /* JCAppDelegate.h */,
 				7CC03ADA183905AE00DC6691 /* JCAppDelegate.m */,
-				7CC03AF918390B9600DC6691 /* JCSubscriptionManager.h */,
-				7CC03AFA18390B9600DC6691 /* JCSubscriptionManager.m */,
-				7CA67E8C1860785500C393F1 /* JCStoreKitHelper.h */,
-				7CA67E8D1860785500C393F1 /* JCStoreKitHelper.m */,
-				7C5EB012183E516800DFF8EB /* JCReceiptVerifier.h */,
-				7C5EB013183E516800DFF8EB /* JCReceiptVerifier.m */,
-				7CA67E851860170000C393F1 /* JCLegacyReceiptVerifier.h */,
-				7CA67E861860170000C393F1 /* JCLegacyReceiptVerifier.m */,
-				7CA67E8918606A6000C393F1 /* JCAppReceiptVerifier.h */,
-				7CA67E8A18606A6000C393F1 /* JCAppReceiptVerifier.m */,
-				7C5EB015183E51F900DFF8EB /* NSData+Base64.h */,
-				7C5EB016183E51F900DFF8EB /* NSData+Base64.m */,
-				7C5EB01F183FC11E00DFF8EB /* JCSubscriptionManagerConfigs.h */,
-				7CD74083184F6E640026CC7D /* ProductIdentifiers.plist */,
+				7C403DA71871846400486A65 /* SubscriptionManager */,
 				7CC03ADC183905AE00DC6691 /* Images.xcassets */,
 				7CC03AD1183905AE00DC6691 /* Supporting Files */,
 			);
@@ -519,7 +532,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CD74084184F6E640026CC7D /* ProductIdentifiers.plist in Resources */,
+				7C403DBE1871846400486A65 /* ProductIdentifiers.plist in Resources */,
+				7C403DBF1871846400486A65 /* SubscriptionManager-Info.plist in Resources */,
 				7CC03AD5183905AE00DC6691 /* InfoPlist.strings in Resources */,
 				7CC03ADD183905AE00DC6691 /* Images.xcassets in Resources */,
 			);
@@ -541,18 +555,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CC03AD7183905AE00DC6691 /* main.m in Sources */,
-				7CA67E871860170000C393F1 /* JCLegacyReceiptVerifier.m in Sources */,
 				7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */,
-				7C5EB014183E516800DFF8EB /* JCReceiptVerifier.m in Sources */,
 				7CF1B218186DCAD1009D1EAC /* RMStore.m in Sources */,
 				7CF1B213186DCAD1009D1EAC /* RMStoreAppReceiptVerificator.m in Sources */,
-				7CA67E8B18606A6000C393F1 /* JCAppReceiptVerifier.m in Sources */,
+				7C403DBB1871846400486A65 /* JCStoreKitHelper.m in Sources */,
 				7CC03ADB183905AE00DC6691 /* JCAppDelegate.m in Sources */,
 				7CF1B212186DCAD1009D1EAC /* RMAppReceipt.m in Sources */,
 				7C5EB010183E466600DFF8EB /* Lockbox.m in Sources */,
-				7CC03AFB18390B9600DC6691 /* JCSubscriptionManager.m in Sources */,
-				7CA67E8E1860785500C393F1 /* JCStoreKitHelper.m in Sources */,
-				7C5EB017183E51F900DFF8EB /* NSData+Base64.m in Sources */,
+				7C403DB91871846400486A65 /* JCLegacyReceiptVerifier.m in Sources */,
+				7C403DB81871846400486A65 /* JCAppReceiptVerifier.m in Sources */,
+				7C403DBA1871846400486A65 /* JCReceiptVerifier.m in Sources */,
+				7C403DBD1871846400486A65 /* NSData+Base64.m in Sources */,
+				7C403DBC1871846400486A65 /* JCSubscriptionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
