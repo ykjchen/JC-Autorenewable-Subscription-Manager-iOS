@@ -14,7 +14,6 @@
 		7C403DBC1871846400486A65 /* JCSubscriptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DB11871846400486A65 /* JCSubscriptionManager.m */; };
 		7C403DBD1871846400486A65 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DB41871846400486A65 /* NSData+Base64.m */; };
 		7C403DBE1871846400486A65 /* ProductIdentifiers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C403DB51871846400486A65 /* ProductIdentifiers.plist */; };
-		7C403DBF1871846400486A65 /* SubscriptionManager-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C403DB61871846400486A65 /* SubscriptionManager-Info.plist */; };
 		7C5EB010183E466600DFF8EB /* Lockbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB00D183E466600DFF8EB /* Lockbox.m */; };
 		7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB01B183FA31400DFF8EB /* Reachability.m */; };
 		7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E92186173B700C393F1 /* StoreKit.framework */; };
@@ -63,8 +62,6 @@
 		7C403DB31871846400486A65 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		7C403DB41871846400486A65 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		7C403DB51871846400486A65 /* ProductIdentifiers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProductIdentifiers.plist; sourceTree = "<group>"; };
-		7C403DB61871846400486A65 /* SubscriptionManager-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SubscriptionManager-Info.plist"; sourceTree = "<group>"; };
-		7C403DB71871846400486A65 /* SubscriptionManager-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SubscriptionManager-Prefix.pch"; sourceTree = "<group>"; };
 		7C5EB00B183E466600DFF8EB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7C5EB00C183E466600DFF8EB /* Lockbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lockbox.h; sourceTree = "<group>"; };
 		7C5EB00D183E466600DFF8EB /* Lockbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lockbox.m; sourceTree = "<group>"; };
@@ -221,8 +218,6 @@
 				7C403DB31871846400486A65 /* NSData+Base64.h */,
 				7C403DB41871846400486A65 /* NSData+Base64.m */,
 				7C403DB51871846400486A65 /* ProductIdentifiers.plist */,
-				7C403DB61871846400486A65 /* SubscriptionManager-Info.plist */,
-				7C403DB71871846400486A65 /* SubscriptionManager-Prefix.pch */,
 			);
 			path = SubscriptionManager;
 			sourceTree = "<group>";
@@ -533,7 +528,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C403DBE1871846400486A65 /* ProductIdentifiers.plist in Resources */,
-				7C403DBF1871846400486A65 /* SubscriptionManager-Info.plist in Resources */,
 				7CC03AD5183905AE00DC6691 /* InfoPlist.strings in Resources */,
 				7CC03ADD183905AE00DC6691 /* Images.xcassets in Resources */,
 			);
