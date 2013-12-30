@@ -95,6 +95,7 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
     if (self) {
         // Custom initialization here.
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self.storeKitHelper];
+        [self.storeKitHelper requestProductData];
     }
     return self;
 }
@@ -140,7 +141,11 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
 
 - (NSArray *)products
 {
-    return self.storeKitHelper.products;
+    NSArray *products = self.storeKitHelper.products;
+    if (!products) {
+        [self.storeKitHelper requestProductData];
+    }
+    return products;
 }
 
 - (BOOL)isSubscriptionActive

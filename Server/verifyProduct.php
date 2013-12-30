@@ -1,7 +1,7 @@
 <?php
 	/*
 	* Change <<YOUR APPLE APP SECRET>> below to your autorenewable subscription
-	* shared secret, which you can find in your iTunesConnect > Manage Apps.
+	* shared secret, which you can find in your iTunesConnect > Manage Your Apps.
 	*/
 	
 	// Inputs
