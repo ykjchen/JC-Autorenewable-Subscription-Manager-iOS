@@ -6,7 +6,7 @@ The JCSubscriptionManager class provides a singleton that manages autorenewable 
 
 ###Add to your project
 1. Link `StoreKit.framework` and `Security.framework`.
-2. Drag the `SubscriptionManager` directory to your project.
+2. Drag the `SubscriptionManager`, `RMStore`, `Lockbox`, and `Reachability` directories to your project.
 3. Edit `ProductIdentifiers.plist` to include product identifiers for your autorenewable subscriptions.
 4. Edit `JCSubscriptionManagerConfigs.h` to customize settings.
 5. Add to app delegate's `-didFinishLaunching:withOptions:`
@@ -14,7 +14,9 @@ The JCSubscriptionManager class provides a singleton that manages autorenewable 
 ```objective-c
 [JCSubscriptionManager sharedManager];
 ```
-###Set up server-side scripts
+###Set up server-side receipt verification
+Skip this step if your app supports only >= iOS 7, where the local app receipt is used for verification.
+
 
 ###Purchase a subscription
 
