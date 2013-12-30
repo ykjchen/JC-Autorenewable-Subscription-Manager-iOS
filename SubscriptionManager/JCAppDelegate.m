@@ -8,12 +8,25 @@
 
 #import "JCAppDelegate.h"
 
+#import "JCSubscriptionViewController.h"
+#import "JCSubscriptionManager.h"
+
 @implementation JCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     // Override point for customization after application launch.
+    
+    // Call +sharedManager here to start observing the payment queue
+    // and get product data.
+    [JCSubscriptionManager sharedManager];
+    
+    // ViewController for testing your subscriptions.
+    JCSubscriptionViewController *vc = [[JCSubscriptionViewController alloc] init];
+    self.window.rootViewController = vc;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

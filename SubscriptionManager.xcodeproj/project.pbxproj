@@ -14,6 +14,7 @@
 		7C403DBC1871846400486A65 /* JCSubscriptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DB11871846400486A65 /* JCSubscriptionManager.m */; };
 		7C403DBD1871846400486A65 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DB41871846400486A65 /* NSData+Base64.m */; };
 		7C403DBE1871846400486A65 /* ProductIdentifiers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C403DB51871846400486A65 /* ProductIdentifiers.plist */; };
+		7C403DC21871A24400486A65 /* JCSubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DC11871A24400486A65 /* JCSubscriptionViewController.m */; };
 		7C5EB010183E466600DFF8EB /* Lockbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB00D183E466600DFF8EB /* Lockbox.m */; };
 		7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB01B183FA31400DFF8EB /* Reachability.m */; };
 		7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E92186173B700C393F1 /* StoreKit.framework */; };
@@ -62,6 +63,8 @@
 		7C403DB31871846400486A65 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		7C403DB41871846400486A65 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		7C403DB51871846400486A65 /* ProductIdentifiers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProductIdentifiers.plist; sourceTree = "<group>"; };
+		7C403DC01871A24400486A65 /* JCSubscriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSubscriptionViewController.h; sourceTree = "<group>"; };
+		7C403DC11871A24400486A65 /* JCSubscriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSubscriptionViewController.m; sourceTree = "<group>"; };
 		7C5EB00B183E466600DFF8EB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		7C5EB00C183E466600DFF8EB /* Lockbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lockbox.h; sourceTree = "<group>"; };
 		7C5EB00D183E466600DFF8EB /* Lockbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lockbox.m; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 			children = (
 				7CC03AD9183905AE00DC6691 /* JCAppDelegate.h */,
 				7CC03ADA183905AE00DC6691 /* JCAppDelegate.m */,
+				7C403DC01871A24400486A65 /* JCSubscriptionViewController.h */,
+				7C403DC11871A24400486A65 /* JCSubscriptionViewController.m */,
 				7C403DA71871846400486A65 /* SubscriptionManager */,
 				7CC03ADC183905AE00DC6691 /* Images.xcassets */,
 				7CC03AD1183905AE00DC6691 /* Supporting Files */,
@@ -552,6 +557,7 @@
 				7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */,
 				7CF1B218186DCAD1009D1EAC /* RMStore.m in Sources */,
 				7CF1B213186DCAD1009D1EAC /* RMStoreAppReceiptVerificator.m in Sources */,
+				7C403DC21871A24400486A65 /* JCSubscriptionViewController.m in Sources */,
 				7C403DBB1871846400486A65 /* JCStoreKitHelper.m in Sources */,
 				7CC03ADB183905AE00DC6691 /* JCAppDelegate.m in Sources */,
 				7CF1B212186DCAD1009D1EAC /* RMAppReceipt.m in Sources */,
