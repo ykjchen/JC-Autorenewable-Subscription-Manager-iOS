@@ -68,6 +68,8 @@ Again, you will also be notified of changes in subscription status through the n
 - (BOOL)isSubscriptionActive;
 ```
 
+If you have multiple subscriptions in a 'family', this checks if any of them is active.
+
 ###Notifications
 
 1. `JCSubscriptionWasMadeNotification`: sent if an active subscription was verified when no previous subscription was found or a previous subscription lapsed.
