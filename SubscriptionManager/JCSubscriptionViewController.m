@@ -226,7 +226,7 @@ void ShowAlert(NSString *title, NSString *message)
     static NSString *const reuseId = @"Cell";
     UITableViewCell *cell = [self.productTableView dequeueReusableCellWithIdentifier:reuseId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
                                       reuseIdentifier:reuseId];
     }
     
