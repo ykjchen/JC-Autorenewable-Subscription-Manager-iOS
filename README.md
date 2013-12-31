@@ -15,9 +15,13 @@ ARC is required.
 ###Add to your project
 1. Link `StoreKit.framework`, `Security.framework`, and `SystemConfiguration.framework`.
 2. Drag the `SubscriptionManager`, `RMStore`, `Lockbox`, and `Reachability` directories to your project.
-3. Edit `ProductIdentifiers.plist` to include product identifiers for your autorenewable subscriptions.
-4. Edit `JCSubscriptionManagerConfigs.h` to customize settings.
-5. Add to app delegate's `-didFinishLaunching:withOptions:`
+3. Add OpenSSL includes (from RMStore) to your Target's Header Search Paths, e.g.: 
+
+        $(SRCROOT)/RMStore/RMStore/Optional/openssl-1.0.1e/include
+
+4. Edit `ProductIdentifiers.plist` to include product identifiers for your autorenewable subscriptions.
+5. Edit `JCSubscriptionManagerConfigs.h` to customize settings.
+6. Add to app delegate's `-didFinishLaunching:withOptions:`
                       
         [JCSubscriptionManager sharedManager];
 
