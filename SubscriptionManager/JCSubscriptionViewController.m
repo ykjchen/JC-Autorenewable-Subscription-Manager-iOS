@@ -84,7 +84,6 @@ void ShowAlert(NSString *title, NSString *message)
 	// Do any additional setup after loading the view.
     
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:_statusLabel];
     
     _productTableView = [[UITableView alloc] initWithFrame:CGRectZero
@@ -94,7 +93,6 @@ void ShowAlert(NSString *title, NSString *message)
     [self.view addSubview:_productTableView];
     
     self.restoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _restoreButton.backgroundColor = [UIColor lightGrayColor];
     [_restoreButton setTitle:@"Tap to Restore Purchases" forState:UIControlStateNormal];
     [_restoreButton addTarget:self
                        action:@selector(tappedRestoreButton:)
@@ -116,7 +114,7 @@ void ShowAlert(NSString *title, NSString *message)
     CGFloat const statusRelativeHeight = 0.2f;
     CGFloat const productRelativeHeight = 0.6f;
     CGFloat const restoreRelativeHeight = 0.2f;
-    CGFloat const textRelativeSize = 0.5f;
+    CGFloat const textRelativeSize = 0.2f;
     
     CGFloat const width = self.view.bounds.size.width;
     CGFloat const height = self.view.bounds.size.height;
@@ -125,6 +123,7 @@ void ShowAlert(NSString *title, NSString *message)
     CGFloat const statusHeight = statusRelativeHeight * height;
     self.statusLabel.frame = CGRectMake(0.0f, y, width, statusHeight);
     self.statusLabel.font = [UIFont systemFontOfSize:statusHeight * textRelativeSize];
+    self.statusLabel.textAlignment = NSTextAlignmentCenter;
     y += statusHeight;
     
     CGFloat const productHeight = productRelativeHeight * height;
@@ -172,16 +171,20 @@ void ShowAlert(NSString *title, NSString *message)
 
 - (void)tappedRestoreButton:(UIButton *)button
 {
+    NSError *pretransactionError = nil;
     BOOL restoreStarted = [[JCSubscriptionManager sharedManager] restorePreviousTransactionsWithCompletion:^(BOOL success, NSError *error) {
         if (!success) {
             ShowAlert(@"Restore Failed", error.localizedDescription);
         }
         
         [self.activityView hide];
-    }];
+    }
+                                                                                                     error:&pretransactionError];
     
     if (restoreStarted) {
         [self.activityView showInView:self.view];
+    } else {
+        ShowAlert(@"Restore Failed", pretransactionError.localizedDescription);
     }
 }
 
@@ -227,7 +230,7 @@ void ShowAlert(NSString *title, NSString *message)
     static NSString *const reuseId = @"Cell";
     UITableViewCell *cell = [self.productTableView dequeueReusableCellWithIdentifier:reuseId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
                                       reuseIdentifier:reuseId];
     }
     
@@ -235,7 +238,7 @@ void ShowAlert(NSString *title, NSString *message)
         cell.textLabel.text = product.productIdentifier;
         cell.detailTextLabel.text = [product formattedPrice];
     } else {
-        cell.textLabel.text = @"Product data not fetched yet...";
+        cell.textLabel.text = @"None";
     }
     
     return cell;
@@ -245,6 +248,8 @@ void ShowAlert(NSString *title, NSString *message)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView  deselectRowAtIndexPath:indexPath animated:YES];
+    
     SKProduct *product = [self productForIndexPath:indexPath];
     if (!product) {
         ShowAlert(@"Please Wait", @"Product data not yet fetched.");
@@ -256,6 +261,7 @@ void ShowAlert(NSString *title, NSString *message)
         return;
     }
     
+    NSError *pretransactionError = nil;
     BOOL purchaseStarted = [[JCSubscriptionManager sharedManager] buyProductWithIdentifier:product.productIdentifier
                                                                                 completion:^(BOOL success, NSError *error) {
                                                                                     if (!success) {
@@ -263,9 +269,12 @@ void ShowAlert(NSString *title, NSString *message)
                                                                                     }
                                                                                     
                                                                                     [self.activityView hide];
-                                                                                }];
+                                                                                }
+                                                                                     error:&pretransactionError];
     if (purchaseStarted) {
         [self.activityView showInView:self.view];
+    } else {
+        ShowAlert(@"Purchase Failed", pretransactionError.localizedDescription);
     }
 }
 

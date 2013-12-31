@@ -13,11 +13,15 @@ JCSubscriptionManager uses the following:
 ARC is required.
 
 ###Add to your project
-1. Link `StoreKit.framework` and `Security.framework`.
+1. Link `StoreKit.framework`, `Security.framework`, and `SystemConfiguration.framework`.
 2. Drag the `SubscriptionManager`, `RMStore`, `Lockbox`, and `Reachability` directories to your project.
-3. Edit `ProductIdentifiers.plist` to include product identifiers for your autorenewable subscriptions.
-4. Edit `JCSubscriptionManagerConfigs.h` to customize settings.
-5. Add to app delegate's `-didFinishLaunching:withOptions:`
+3. Add OpenSSL includes (from RMStore) to your Target's Header Search Paths, e.g.: 
+
+        $(SRCROOT)/RMStore/RMStore/Optional/openssl-1.0.1e/include
+
+4. Edit `ProductIdentifiers.plist` to include product identifiers for your autorenewable subscriptions.
+5. Edit `JCSubscriptionManagerConfigs.h` to customize settings.
+6. Add to app delegate's `-didFinishLaunching:withOptions:`
                       
         [JCSubscriptionManager sharedManager];
 
@@ -47,9 +51,11 @@ To purchase a subscription, use:
 
 ```objective-c
 - (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
-                      completion:(void (^)(BOOL success, NSError *error))completion;]
+                      completion:(void (^)(BOOL success, NSError *transactionError))completion
+                           error:(NSError *__autoreleasing *)pretransactionError;
 ```
 
+This method returns NO if an error prevents the product being added to the payment queue.
 You may also provide/remove access to subscription features by responding to the notifications `JCSubscriptionWasMadeNotification` and `JCSubscriptionExpiredNotification`, described below.
 
 ###Restore previous purchases
@@ -57,10 +63,11 @@ You may also provide/remove access to subscription features by responding to the
 Restore previous transactions with:
 
 ```objective-c
-- (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL success, NSError *error))completion;
+- (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL success, NSError *transactionError))completion
+                                            error:(NSError *__autoreleasing *)pretransactionError;
 ```
 
-Again, you will also be notified of changes in subscription status through the notifications described below.
+Again, this returns NO if the restore fails to start, and you will also be notified of changes in subscription status through the notifications described below.
 
 ###Check if user is subscribed
 
@@ -86,5 +93,19 @@ A few things to point out:
 * Subscriptions auto-renew a max of 6 times a day in the sandbox.
 * Nearly-expired subscriptions get renewed when the app launches in the 24 hours prior to the expiration date. In the sandbox, this may be hard to replicate, and when a subscription expires JCSubscriptionManager tries to refresh the saved receipt to check for a renewal. However, there may be a lapses between expiration and renewal verification.
 
+###License
 
+Copyright 2014 Joseph Chen
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+[http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 

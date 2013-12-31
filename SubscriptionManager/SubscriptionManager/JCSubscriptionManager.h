@@ -24,7 +24,12 @@ extern NSString *const JCProductDataWasFetchedNotification;
  */
 // Formatted logs.
 // http://stackoverflow.com/questions/2770307/nslog-the-method-name-with-objective-c-in-iphone
+
+#if DEBUG
 #define JCLog(format, ...) JCLogIfEnabled(@"<%@:%@> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [NSString stringWithFormat:(format), ##__VA_ARGS__])
+#else
+#define JCLog(format, ...)
+#endif
 
 void JCLogIfEnabled(NSString *format, ...);
 
@@ -52,12 +57,14 @@ void JCLogIfEnabled(NSString *format, ...);
  * Purchase a subscription. Returns NO if method fails before purchase is attempted.
  */
 - (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
-                      completion:(void (^)(BOOL success, NSError *error))completion;
+                      completion:(void (^)(BOOL success, NSError *transactionError))completion
+                           error:(NSError *__autoreleasing *)pretransactionError;
 
 /*!
  * Restore purchases. Returns NO if method fails before restore is attempted.
  */
-- (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL success, NSError *error))completion;
+- (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL success, NSError *transactionError))completion
+                                            error:(NSError *__autoreleasing *)pretransactionError;
 
 /*
  * Remove all stored purchase information (e.g. for testing)
