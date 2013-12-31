@@ -33,7 +33,7 @@
 
 // If an error is encountered during verification,
 // the verifier will retry verification this many seconds later.
-NSTimeInterval const kVerificationRetryInterval = 300.0;
+NSTimeInterval const kVerificationRetryInterval = 60.0;
 NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 
 @implementation JCLegacyReceiptVerifier
@@ -231,7 +231,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     }
     
     // verify each receipt
-    for (NSData *receipt in self.receiptsAwaitingVerification) {
+    for (NSData *receipt in [NSArray arrayWithArray:self.receiptsAwaitingVerification]) {
         [self verifyReceipt:receipt];
     }
 }
