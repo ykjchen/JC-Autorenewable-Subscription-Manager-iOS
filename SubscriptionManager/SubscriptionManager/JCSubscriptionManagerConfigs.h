@@ -23,7 +23,7 @@
 
 // Apple's server is used to verify receipt if your server is down.
 #ifndef APPLE_VERIFICATION_SERVER
-#if SANDBOX_MODE
+#if DEBUG
 #define APPLE_VERIFICATION_SERVER @"https://sandbox.itunes.apple.com/verifyReceipt" // Test server.
 #else
 #define APPLE_VERIFICATION_SERVER @"https://buy.itunes.apple.com/verifyReceipt" // Production server.
