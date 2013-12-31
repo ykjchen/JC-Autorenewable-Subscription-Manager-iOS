@@ -242,4 +242,22 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
 @end
 
 
+@implementation SKProduct (JCSubscriptionManager)
+
+- (NSString *)formattedPrice
+{
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [numberFormatter setLocale:self.priceLocale];
+    NSString *formattedString = [numberFormatter stringFromNumber:self.price];
+    
+#if !__has_feature(objc_arc)
+    [numberFormatter release];
+#endif
+    
+    return formattedString;
+}
+
+@end
 
