@@ -35,5 +35,5 @@
 
 // Set to YES if you wish to receive logs in the console. (Default: YES when debugging, NO for production)
 #ifndef LOGGING_ENABLED
-#define LOGGING_ENABLED SANDBOX_MODE
+#define LOGGING_ENABLED SANDBOX_MODE==YES
 #endif

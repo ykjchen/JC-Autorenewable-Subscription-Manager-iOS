@@ -143,7 +143,13 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
         self.onPurchaseCompletion = completion;
     }
     
-    return YES;
+    BOOL addedToPaymentQueue = [self addProductToPaymentQueue:productIdentifier];
+    
+    if (!addedToPaymentQueue) {
+        self.onPurchaseCompletion = nil;
+    }
+    
+    return addedToPaymentQueue;
 }
 
 - (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL, NSError *))completion
