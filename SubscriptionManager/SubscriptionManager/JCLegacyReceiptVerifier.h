@@ -37,4 +37,10 @@
 
 @end
 
+@interface NSString (JCLegacyReceiptVerifier)
+
+- (NSString *)hostName;
+
+@end
+
 

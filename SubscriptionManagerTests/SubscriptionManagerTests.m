@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import "JCLegacyReceiptVerifier.h"
+
 @interface SubscriptionManagerTests : XCTestCase
 
 @end
@@ -29,6 +31,20 @@
 - (void)testExample
 {
     XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+}
+
+- (void)testHostName
+{
+    NSArray *inputs = [NSArray arrayWithObjects:
+                       @"https://sandbox.itunes.apple.com/verifyReceipt",
+                       @"http://sandbox.itunes.apple.com",
+                       @"sandbox.itunes.apple.com", nil];
+    NSString *expectedOutput = @"sandbox.itunes.apple.com";
+    
+    for (NSString *input in inputs) {
+        NSString *hostname = [input hostName];
+        XCTAssertEqual(hostname, expectedOutput, @"Expected:%@ Got:%@", expectedOutput, hostname);
+    }
 }
 
 @end

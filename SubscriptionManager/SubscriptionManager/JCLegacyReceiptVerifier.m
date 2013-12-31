@@ -92,7 +92,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     NSArray *servers = [self verificationServers];
     NSMutableDictionary *reachabilities = [NSMutableDictionary dictionaryWithCapacity:servers.count];
     for (NSString *server in servers) {
-        Reachability *reachability = [Reachability reachabilityWithHostName:server];
+        Reachability *reachability = [Reachability reachabilityWithHostName:[server hostName]];
         [reachabilities setObject:reachability forKey:server];
     }
     self.reachabilities = [NSDictionary dictionaryWithDictionary:reachabilities];
@@ -426,5 +426,26 @@ didReceiveResponse:(NSURLResponse *)response
 #pragma mark - JCURLConnection
 
 @implementation JCURLConnection
+
+@end
+
+@implementation NSString (JCLegacyReceiptVerifier)
+
+- (NSString *)hostName
+{
+    NSRange startRange = [self rangeOfString:@"://"];
+    NSInteger startLocation = startRange.location;
+    NSInteger endSearchLocation = startRange.location + startRange.length;
+    NSInteger endLocation = [self rangeOfString:@"/"
+                                        options:0
+                                          range:NSMakeRange(endSearchLocation, endSearchLocation)].location;
+    if (startLocation == NSNotFound)
+        startLocation = 0;
+    
+    if (endLocation == NSNotFound)
+        endLocation = self.length;
+    
+    return [self substringWithRange:NSMakeRange(startLocation, endLocation - startLocation)];
+}
 
 @end
