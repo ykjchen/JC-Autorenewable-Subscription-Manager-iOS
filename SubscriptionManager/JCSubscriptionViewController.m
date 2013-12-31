@@ -84,7 +84,6 @@ void ShowAlert(NSString *title, NSString *message)
 	// Do any additional setup after loading the view.
     
     _statusLabel = [[UILabel alloc] init];
-    _statusLabel.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:_statusLabel];
     
     _productTableView = [[UITableView alloc] initWithFrame:CGRectZero
@@ -94,7 +93,6 @@ void ShowAlert(NSString *title, NSString *message)
     [self.view addSubview:_productTableView];
     
     self.restoreButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _restoreButton.backgroundColor = [UIColor lightGrayColor];
     [_restoreButton setTitle:@"Tap to Restore Purchases" forState:UIControlStateNormal];
     [_restoreButton addTarget:self
                        action:@selector(tappedRestoreButton:)
@@ -116,7 +114,7 @@ void ShowAlert(NSString *title, NSString *message)
     CGFloat const statusRelativeHeight = 0.2f;
     CGFloat const productRelativeHeight = 0.6f;
     CGFloat const restoreRelativeHeight = 0.2f;
-    CGFloat const textRelativeSize = 0.5f;
+    CGFloat const textRelativeSize = 0.2f;
     
     CGFloat const width = self.view.bounds.size.width;
     CGFloat const height = self.view.bounds.size.height;
@@ -125,6 +123,7 @@ void ShowAlert(NSString *title, NSString *message)
     CGFloat const statusHeight = statusRelativeHeight * height;
     self.statusLabel.frame = CGRectMake(0.0f, y, width, statusHeight);
     self.statusLabel.font = [UIFont systemFontOfSize:statusHeight * textRelativeSize];
+    self.statusLabel.textAlignment = NSTextAlignmentCenter;
     y += statusHeight;
     
     CGFloat const productHeight = productRelativeHeight * height;
@@ -235,7 +234,7 @@ void ShowAlert(NSString *title, NSString *message)
         cell.textLabel.text = product.productIdentifier;
         cell.detailTextLabel.text = [product formattedPrice];
     } else {
-        cell.textLabel.text = @"Product data not fetched yet...";
+        cell.textLabel.text = @"None";
     }
     
     return cell;
