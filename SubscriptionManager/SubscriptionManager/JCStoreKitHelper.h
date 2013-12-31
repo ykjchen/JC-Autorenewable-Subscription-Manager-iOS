@@ -24,7 +24,9 @@
 
 - (BOOL)requestProductData;
 - (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
-                      completion:(void (^)(BOOL, NSError *))completion;
-- (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL, NSError *))completion;
+                      completion:(void (^)(BOOL, NSError *))completion
+                           error:(NSError **)error;
+- (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL, NSError *))completion
+                                            error:(NSError *__autoreleasing *)error;
 
 @end

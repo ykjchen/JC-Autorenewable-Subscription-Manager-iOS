@@ -161,16 +161,20 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
 
 - (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
                       completion:(void (^)(BOOL, NSError *))completion
+                           error:(NSError *__autoreleasing *)error
 {
     // forward to storeKitHelper
     return [self.storeKitHelper buyProductWithIdentifier:productIdentifier
-                                              completion:completion];
+                                              completion:completion
+                                                   error:error];
 }
 
 - (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL, NSError *))completion
+                                            error:(NSError *__autoreleasing *)error
 {
     // forward to storeKitHelper
-    return [self.storeKitHelper restorePreviousTransactionsWithCompletion:completion];
+    return [self.storeKitHelper restorePreviousTransactionsWithCompletion:completion
+                                                                    error:error];
 }
 
 #pragma mark - JCReceiptVerifierDelegate

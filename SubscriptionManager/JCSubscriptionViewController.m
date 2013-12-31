@@ -171,16 +171,20 @@ void ShowAlert(NSString *title, NSString *message)
 
 - (void)tappedRestoreButton:(UIButton *)button
 {
+    NSError *pretransactionError = nil;
     BOOL restoreStarted = [[JCSubscriptionManager sharedManager] restorePreviousTransactionsWithCompletion:^(BOOL success, NSError *error) {
         if (!success) {
             ShowAlert(@"Restore Failed", error.localizedDescription);
         }
         
         [self.activityView hide];
-    }];
+    }
+                                                                                                     error:&pretransactionError];
     
     if (restoreStarted) {
         [self.activityView showInView:self.view];
+    } else {
+        ShowAlert(@"Restore Failed", pretransactionError.localizedDescription);
     }
 }
 
@@ -244,6 +248,8 @@ void ShowAlert(NSString *title, NSString *message)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView  deselectRowAtIndexPath:indexPath animated:YES];
+    
     SKProduct *product = [self productForIndexPath:indexPath];
     if (!product) {
         ShowAlert(@"Please Wait", @"Product data not yet fetched.");
@@ -255,6 +261,7 @@ void ShowAlert(NSString *title, NSString *message)
         return;
     }
     
+    NSError *pretransactionError = nil;
     BOOL purchaseStarted = [[JCSubscriptionManager sharedManager] buyProductWithIdentifier:product.productIdentifier
                                                                                 completion:^(BOOL success, NSError *error) {
                                                                                     if (!success) {
@@ -262,9 +269,12 @@ void ShowAlert(NSString *title, NSString *message)
                                                                                     }
                                                                                     
                                                                                     [self.activityView hide];
-                                                                                }];
+                                                                                }
+                                                                                     error:&pretransactionError];
     if (purchaseStarted) {
         [self.activityView showInView:self.view];
+    } else {
+        ShowAlert(@"Purchase Failed", pretransactionError.localizedDescription);
     }
 }
 

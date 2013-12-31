@@ -68,7 +68,6 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
 
 - (BOOL)addProductToPaymentQueue:(NSString *)productId
 {
-    if ([SKPaymentQueue canMakePayments]) {
         NSInteger productIndex = [self.products indexOfObjectPassingTest:^BOOL(SKProduct *obj, NSUInteger idx, BOOL *stop)
                                   {
                                       if ([obj.productIdentifier isEqualToString:productId]) {
@@ -84,18 +83,11 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
         }
         
         SKProduct *product = [self.products objectAtIndex:productIndex];
-        if (!product) {
-            return NO;
-        }
-        
+    
 		SKPayment *payment = [SKPayment paymentWithProduct:product];
 		[[SKPaymentQueue defaultQueue] addPayment:payment];
         
         return YES;
-	} else {
-        JCLog(@"Could not add product to SKPaymentQueue because IAP is disabled in Settings.");
-        return NO;
-	}
 }
 
 #pragma mark - Public
@@ -126,16 +118,42 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
     return YES;
 }
 
-- (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
-                      completion:(void (^)(BOOL, NSError *))completion
+- (BOOL)canStoreTransactionProceed:(NSError *__autoreleasing *)error
 {
+    BOOL hasError = NO;
+    NSString *errorMessage = nil;
     if (self.onPurchaseCompletion || self.onRestoreCompletion) {
-        JCLog(@"Could not buy product because another transaction is in progress.");
-        return NO;
+        errorMessage = @"Could not start transaction because another transaction is in progress.";
+        hasError = YES;
+    }
+    
+    if (!hasError && ![self isInternetReachable]) {
+        errorMessage = @"Could not start transaction because internet is not reachable.";
+        hasError = YES;
+    }
+    
+    if (!hasError && ![SKPaymentQueue canMakePayments]) {
+        errorMessage = @"Could not add product to SKPaymentQueue because IAP is disabled in Settings.";
+        hasError = YES;
     }
 
-    if (![self isInternetReachable]) {
-        JCLog(@"Could not buy product because internet is not reachable.");
+    if (hasError) {
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:errorMessage forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"JCStoreKitHelperDomain" code:0 userInfo:errorDetail];
+    }
+
+    return !hasError;
+}
+
+- (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
+                      completion:(void (^)(BOOL, NSError *))completion
+                           error:(NSError *__autoreleasing *)error
+{
+    NSError *transactionError = nil;
+    BOOL transactionAllowed = [self canStoreTransactionProceed:&transactionError];
+    if (!transactionAllowed) {
+        *error = transactionError;
         return NO;
     }
 
@@ -147,20 +165,23 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
     
     if (!addedToPaymentQueue) {
         self.onPurchaseCompletion = nil;
+        
+        NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+        [errorDetail setValue:@"Could not add product to payment queue."
+                       forKey:NSLocalizedDescriptionKey];
+        *error = [NSError errorWithDomain:@"JCStoreKitHelperDomain" code:0 userInfo:errorDetail];
     }
     
     return addedToPaymentQueue;
 }
 
 - (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL, NSError *))completion
+                                            error:(NSError *__autoreleasing *)error
 {
-    if (self.onPurchaseCompletion || self.onRestoreCompletion) {
-        JCLog(@"Could not restore purchases because another transaction is in progress.");
-        return NO;
-    }
-    
-    if (![self isInternetReachable]) {
-        JCLog(@"Could not restore purchases because internet is not reachable.");
+    NSError *transactionError = nil;
+    BOOL transactionAllowed = [self canStoreTransactionProceed:&transactionError];
+    if (!transactionAllowed) {
+        *error = transactionError;
         return NO;
     }
     
