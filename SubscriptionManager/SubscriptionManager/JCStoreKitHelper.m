@@ -307,9 +307,7 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
 	[self provideContentForTransaction:transaction];
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
     
-#if LOGGING_ENABLED
-    NSLog(@"Restored %@", transaction.productIdentifier);
-#endif
+    JCLog(@"Restored %@", transaction.payment.productIdentifier);
 }
 
 - (void)provideContentForTransaction:(SKPaymentTransaction *)transaction
