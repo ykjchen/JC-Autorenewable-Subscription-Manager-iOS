@@ -435,17 +435,18 @@ didReceiveResponse:(NSURLResponse *)response
 {
     NSRange startRange = [self rangeOfString:@"://"];
     NSInteger startLocation = startRange.location;
-    NSInteger endSearchLocation = startRange.location + startRange.length;
+    if (startLocation == NSNotFound) {
+        startLocation = 0;
+    }
+    NSInteger hostStartLocation = startLocation + startRange.length;
     NSInteger endLocation = [self rangeOfString:@"/"
                                         options:0
-                                          range:NSMakeRange(endSearchLocation, endSearchLocation)].location;
-    if (startLocation == NSNotFound)
-        startLocation = 0;
-    
-    if (endLocation == NSNotFound)
+                                          range:NSMakeRange(hostStartLocation, self.length - hostStartLocation)].location;
+    if (endLocation == NSNotFound) {
         endLocation = self.length;
+    }
     
-    return [self substringWithRange:NSMakeRange(startLocation, endLocation - startLocation)];
+    return [self substringWithRange:NSMakeRange(hostStartLocation, endLocation - hostStartLocation)];
 }
 
 @end

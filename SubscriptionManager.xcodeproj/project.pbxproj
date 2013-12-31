@@ -18,6 +18,7 @@
 		7C5EB010183E466600DFF8EB /* Lockbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB00D183E466600DFF8EB /* Lockbox.m */; };
 		7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB01B183FA31400DFF8EB /* Reachability.m */; };
 		7C91C0B1187296DE00F323AA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C91C0B0187296DE00F323AA /* SystemConfiguration.framework */; };
+		7C91C0B518729E7A00F323AA /* JCLegacyReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DAB1871846400486A65 /* JCLegacyReceiptVerifier.m */; };
 		7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E92186173B700C393F1 /* StoreKit.framework */; };
 		7CA67E951861766900C393F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E941861766900C393F1 /* Security.framework */; };
 		7CC03ACB183905AE00DC6691 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CC03ACA183905AE00DC6691 /* Foundation.framework */; };
@@ -578,6 +579,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C91C0B518729E7A00F323AA /* JCLegacyReceiptVerifier.m in Sources */,
 				7CC03AF0183905AF00DC6691 /* SubscriptionManagerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

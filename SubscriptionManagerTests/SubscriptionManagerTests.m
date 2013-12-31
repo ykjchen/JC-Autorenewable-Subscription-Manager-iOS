@@ -28,11 +28,6 @@
     [super tearDown];
 }
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
-}
-
 - (void)testHostName
 {
     NSArray *inputs = [NSArray arrayWithObjects:
@@ -43,7 +38,7 @@
     
     for (NSString *input in inputs) {
         NSString *hostname = [input hostName];
-        XCTAssertEqual(hostname, expectedOutput, @"Expected:%@ Got:%@", expectedOutput, hostname);
+        XCTAssertEqualObjects(hostname, expectedOutput, @"Expected:%@ Got:%@", expectedOutput, hostname);
     }
 }
 
