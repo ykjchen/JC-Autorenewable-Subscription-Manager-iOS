@@ -7,6 +7,7 @@
 //
 
 #import "JCSubscriptionManager.h"
+#import "JCSubscriptionManagerConfigs.h"
 
 // StoreKit
 #import <StoreKit/StoreKit.h>
@@ -32,14 +33,12 @@ NSString *const JCProductDataWasFetchedNotification = @"JCProductDataWasFetchedN
 // Function allows logging only when enabled.
 // http://stackoverflow.com/questions/17758042/create-custom-variadic-logging-function
 void JCLogIfEnabled(NSString *format, ...) {
-#if LOGGING_ENABLED
     va_list args;
     va_start(args, format);
     NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
     va_end(args);
     
     NSLog(@"%@", msg);
-#endif
 }
 
 #pragma mark - Constants
@@ -162,16 +161,20 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
 
 - (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
                       completion:(void (^)(BOOL, NSError *))completion
+                           error:(NSError *__autoreleasing *)error
 {
     // forward to storeKitHelper
     return [self.storeKitHelper buyProductWithIdentifier:productIdentifier
-                                              completion:completion];
+                                              completion:completion
+                                                   error:error];
 }
 
 - (BOOL)restorePreviousTransactionsWithCompletion:(void (^)(BOOL, NSError *))completion
+                                            error:(NSError *__autoreleasing *)error
 {
     // forward to storeKitHelper
-    return [self.storeKitHelper restorePreviousTransactionsWithCompletion:completion];
+    return [self.storeKitHelper restorePreviousTransactionsWithCompletion:completion
+                                                                    error:error];
 }
 
 #pragma mark - JCReceiptVerifierDelegate
@@ -242,4 +245,22 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
 @end
 
 
+@implementation SKProduct (JCSubscriptionManager)
+
+- (NSString *)formattedPrice
+{
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [numberFormatter setLocale:self.priceLocale];
+    NSString *formattedString = [numberFormatter stringFromNumber:self.price];
+    
+#if !__has_feature(objc_arc)
+    [numberFormatter release];
+#endif
+    
+    return formattedString;
+}
+
+@end
 

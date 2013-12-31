@@ -33,7 +33,7 @@
 
 // If an error is encountered during verification,
 // the verifier will retry verification this many seconds later.
-NSTimeInterval const kVerificationRetryInterval = 300.0;
+NSTimeInterval const kVerificationRetryInterval = 60.0;
 NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 
 @implementation JCLegacyReceiptVerifier
@@ -92,10 +92,12 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     NSArray *servers = [self verificationServers];
     NSMutableDictionary *reachabilities = [NSMutableDictionary dictionaryWithCapacity:servers.count];
     for (NSString *server in servers) {
-        Reachability *reachability = [Reachability reachabilityWithHostName:server];
+        Reachability *reachability = [Reachability reachabilityWithHostName:[server hostName]];
         [reachabilities setObject:reachability forKey:server];
+        [reachability startNotifier];
     }
     self.reachabilities = [NSDictionary dictionaryWithDictionary:reachabilities];
+    self.monitoringInternet = YES;
 }
 
 - (void)startMonitoringInternet
@@ -105,7 +107,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     }
     self.monitoringInternet = YES;
 
-    for (Reachability *reachability in self.reachabilities) {
+    for (Reachability *reachability in [self.reachabilities allValues]) {
         [reachability startNotifier];
     }
 }
@@ -117,7 +119,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     }
     self.monitoringInternet = NO;
     
-    for (Reachability *reachability in self.reachabilities) {
+    for (Reachability *reachability in [self.reachabilities allValues]) {
         [reachability stopNotifier];
     }
 }
@@ -140,6 +142,8 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
         Reachability *reachability = [self.reachabilities objectForKey:server];
         if (reachability.currentReachabilityStatus != NotReachable) {
             return server;
+        } else {
+            JCLog(@"%@ is unreachable.", server);
         }
     }
     return nil;
@@ -229,7 +233,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     }
     
     // verify each receipt
-    for (NSData *receipt in self.receiptsAwaitingVerification) {
+    for (NSData *receipt in [NSArray arrayWithArray:self.receiptsAwaitingVerification]) {
         [self verifyReceipt:receipt];
     }
 }
@@ -424,5 +428,27 @@ didReceiveResponse:(NSURLResponse *)response
 #pragma mark - JCURLConnection
 
 @implementation JCURLConnection
+
+@end
+
+@implementation NSString (JCLegacyReceiptVerifier)
+
+- (NSString *)hostName
+{
+    NSRange startRange = [self rangeOfString:@"://"];
+    NSInteger startLocation = startRange.location;
+    if (startLocation == NSNotFound) {
+        startLocation = 0;
+    }
+    NSInteger hostStartLocation = startLocation + startRange.length;
+    NSInteger endLocation = [self rangeOfString:@"/"
+                                        options:0
+                                          range:NSMakeRange(hostStartLocation, self.length - hostStartLocation)].location;
+    if (endLocation == NSNotFound) {
+        endLocation = self.length;
+    }
+    
+    return [self substringWithRange:NSMakeRange(hostStartLocation, endLocation - hostStartLocation)];
+}
 
 @end
