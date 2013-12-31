@@ -25,7 +25,11 @@ extern NSString *const JCProductDataWasFetchedNotification;
 // Formatted logs.
 // http://stackoverflow.com/questions/2770307/nslog-the-method-name-with-objective-c-in-iphone
 
+#if DEBUG
 #define JCLog(format, ...) JCLogIfEnabled(@"<%@:%@> %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [NSString stringWithFormat:(format), ##__VA_ARGS__])
+#else
+#define JCLog(format, ...)
+#endif
 
 void JCLogIfEnabled(NSString *format, ...);
 

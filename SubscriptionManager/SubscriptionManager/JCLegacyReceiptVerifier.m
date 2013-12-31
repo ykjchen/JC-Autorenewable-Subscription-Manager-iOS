@@ -140,6 +140,8 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
         Reachability *reachability = [self.reachabilities objectForKey:server];
         if (reachability.currentReachabilityStatus != NotReachable) {
             return server;
+        } else {
+            JCLog(@"%@ is unreachable.", server);
         }
     }
     return nil;

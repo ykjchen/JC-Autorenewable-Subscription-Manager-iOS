@@ -7,9 +7,12 @@
 //
 
 // Should debug/sandbox settings be used?
-#warning Set to NO for production.
 #ifndef SANDBOX_MODE
+#if DEBUG
 #define SANDBOX_MODE YES
+#else
+#define SANDBOX_MODE NO
+#endif
 #endif
 
 // Your receipt verification server.
@@ -33,7 +36,3 @@
 #define AUTORENEWABLE_SUBSCRIPTION_SHARED_SECRET @""
 #endif
 
-// Set to YES if you wish to receive logs in the console. (Default: YES when debugging, NO for production)
-#ifndef LOGGING_ENABLED
-#define LOGGING_ENABLED SANDBOX_MODE==YES
-#endif
