@@ -94,8 +94,10 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     for (NSString *server in servers) {
         Reachability *reachability = [Reachability reachabilityWithHostName:[server hostName]];
         [reachabilities setObject:reachability forKey:server];
+        [reachability startNotifier];
     }
     self.reachabilities = [NSDictionary dictionaryWithDictionary:reachabilities];
+    self.monitoringInternet = YES;
 }
 
 - (void)startMonitoringInternet
@@ -117,7 +119,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     }
     self.monitoringInternet = NO;
     
-    for (Reachability *reachability in self.reachabilities) {
+    for (Reachability *reachability in [self.reachabilities allValues]) {
         [reachability stopNotifier];
     }
 }
