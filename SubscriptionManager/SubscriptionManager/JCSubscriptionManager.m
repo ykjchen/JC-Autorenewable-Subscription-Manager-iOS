@@ -95,8 +95,6 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
         // Custom initialization here.
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self.storeKitHelper];
         [self.storeKitHelper requestProductData];
-        
-        NSLog(@"LOGGING_ENABLED: %i", LOGGING_ENABLED);
     }
     return self;
 }
