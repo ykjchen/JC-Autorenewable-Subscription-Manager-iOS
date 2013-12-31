@@ -7,6 +7,7 @@
 //
 
 #import "JCSubscriptionManager.h"
+#import "JCSubscriptionManagerConfigs.h"
 
 // StoreKit
 #import <StoreKit/StoreKit.h>
@@ -32,7 +33,7 @@ NSString *const JCProductDataWasFetchedNotification = @"JCProductDataWasFetchedN
 // Function allows logging only when enabled.
 // http://stackoverflow.com/questions/17758042/create-custom-variadic-logging-function
 void JCLogIfEnabled(NSString *format, ...) {
-#if LOGGING_ENABLED
+#if LOGGING_ENABLED==YES
     va_list args;
     va_start(args, format);
     NSString *msg = [[NSString alloc] initWithFormat:format arguments:args];
@@ -96,6 +97,8 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
         // Custom initialization here.
         [[SKPaymentQueue defaultQueue] addTransactionObserver:self.storeKitHelper];
         [self.storeKitHelper requestProductData];
+        
+        NSLog(@"LOGGING_ENABLED: %i", LOGGING_ENABLED);
     }
     return self;
 }

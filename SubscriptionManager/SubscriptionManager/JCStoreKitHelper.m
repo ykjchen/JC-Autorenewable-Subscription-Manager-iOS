@@ -273,9 +273,7 @@ NSTimeInterval kProductRequestRetryInterval = 60.0;
 
 - (void)transactionFailed:(SKPaymentTransaction *)transaction
 {
-#if LOGGING_ENABLED
-    NSLog(@"Failed transaction: %@\nwith error: %@", transaction.description, transaction.error);
-#endif
+    JCLog(@"Failed transaction: %@\nwith error: %@", transaction.description, transaction.error);
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
     
     if (self.onPurchaseCompletion)

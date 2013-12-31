@@ -105,7 +105,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     }
     self.monitoringInternet = YES;
 
-    for (Reachability *reachability in self.reachabilities) {
+    for (Reachability *reachability in [self.reachabilities allValues]) {
         [reachability startNotifier];
     }
 }
