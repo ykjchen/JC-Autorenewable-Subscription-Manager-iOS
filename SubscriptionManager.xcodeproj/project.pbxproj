@@ -17,6 +17,7 @@
 		7C403DC21871A24400486A65 /* JCSubscriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DC11871A24400486A65 /* JCSubscriptionViewController.m */; };
 		7C5EB010183E466600DFF8EB /* Lockbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB00D183E466600DFF8EB /* Lockbox.m */; };
 		7C5EB01C183FA31400DFF8EB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5EB01B183FA31400DFF8EB /* Reachability.m */; };
+		7C91C0B1187296DE00F323AA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C91C0B0187296DE00F323AA /* SystemConfiguration.framework */; };
 		7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E92186173B700C393F1 /* StoreKit.framework */; };
 		7CA67E951861766900C393F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA67E941861766900C393F1 /* Security.framework */; };
 		7CC03ACB183905AE00DC6691 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CC03ACA183905AE00DC6691 /* Foundation.framework */; };
@@ -71,6 +72,7 @@
 		7C5EB00E183E466600DFF8EB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		7C5EB01A183FA31400DFF8EB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		7C5EB01B183FA31400DFF8EB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		7C91C0B0187296DE00F323AA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7CA67E92186173B700C393F1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7CA67E941861766900C393F1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		7CC03AC7183905AE00DC6691 /* SubscriptionManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SubscriptionManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C91C0B1187296DE00F323AA /* SystemConfiguration.framework in Frameworks */,
 				7CA67E951861766900C393F1 /* Security.framework in Frameworks */,
 				7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */,
 				7CF1B211186DCAD1009D1EAC /* libssl.a in Frameworks */,
@@ -270,6 +273,7 @@
 		7CC03AC9183905AE00DC6691 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7C91C0B0187296DE00F323AA /* SystemConfiguration.framework */,
 				7CA67E941861766900C393F1 /* Security.framework */,
 				7CA67E92186173B700C393F1 /* StoreKit.framework */,
 				7CC03ACA183905AE00DC6691 /* Foundation.framework */,
