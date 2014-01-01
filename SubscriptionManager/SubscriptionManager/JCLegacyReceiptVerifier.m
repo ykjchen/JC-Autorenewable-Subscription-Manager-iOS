@@ -54,6 +54,11 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     self = [super init];
     if (self) {
         [self setUpReachabilities];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(receivedSubscriptionExpiredNotification:)
+                                                     name:JCSubscriptionExpiredNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -127,6 +132,11 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 - (BOOL)canStopMonitoringInternet
 {
     return (self.receiptsAwaitingVerification.count == 0);
+}
+
+- (void)receivedSubscriptionExpiredNotification:(NSNotification *)notification
+{
+    [self startMonitoringInternet];
 }
 
 #pragma mark - Verification Server

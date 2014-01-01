@@ -35,6 +35,8 @@
 @property (strong, nonatomic) NSMutableData *data;
 @property (nonatomic) BOOL usingAppleServer;
 
+- (void)startMonitoringInternet;
+
 @end
 
 @interface NSString (JCLegacyReceiptVerifier)
