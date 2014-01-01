@@ -197,7 +197,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
         postDataString = [NSString stringWithFormat:@"receipt-data=%@&sandbox=%i", receiptDataString, SANDBOX_MODE];
     }
     
-	NSString *length = [NSString stringWithFormat:@"%d", [postDataString length]];
+	NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[postDataString length]];
 	[request setValue:length forHTTPHeaderField:@"Content-Length"];
 	
 	[request setHTTPBody:[postDataString dataUsingEncoding:NSASCIIStringEncoding]];

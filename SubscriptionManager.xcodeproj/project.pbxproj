@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C12936C1874102000BD960C /* beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 7C12936B1874102000BD960C /* beep.aiff */; };
+		7C12936E187410D400BD960C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C12936D187410D400BD960C /* AudioToolbox.framework */; };
 		7C403DB81871846400486A65 /* JCAppReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DA91871846400486A65 /* JCAppReceiptVerifier.m */; };
 		7C403DB91871846400486A65 /* JCLegacyReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DAB1871846400486A65 /* JCLegacyReceiptVerifier.m */; };
 		7C403DBA1871846400486A65 /* JCReceiptVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C403DAD1871846400486A65 /* JCReceiptVerifier.m */; };
@@ -51,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C12936B1874102000BD960C /* beep.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = beep.aiff; sourceTree = "<group>"; };
+		7C12936D187410D400BD960C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7C403DA81871846400486A65 /* JCAppReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppReceiptVerifier.h; sourceTree = "<group>"; };
 		7C403DA91871846400486A65 /* JCAppReceiptVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppReceiptVerifier.m; sourceTree = "<group>"; };
 		7C403DAA1871846400486A65 /* JCLegacyReceiptVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLegacyReceiptVerifier.h; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C12936E187410D400BD960C /* AudioToolbox.framework in Frameworks */,
 				7C91C0B1187296DE00F323AA /* SystemConfiguration.framework in Frameworks */,
 				7CA67E951861766900C393F1 /* Security.framework in Frameworks */,
 				7CA67E93186173B700C393F1 /* StoreKit.framework in Frameworks */,
@@ -274,6 +279,7 @@
 		7CC03AC9183905AE00DC6691 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7C12936D187410D400BD960C /* AudioToolbox.framework */,
 				7C91C0B0187296DE00F323AA /* SystemConfiguration.framework */,
 				7CA67E941861766900C393F1 /* Security.framework */,
 				7CA67E92186173B700C393F1 /* StoreKit.framework */,
@@ -306,6 +312,7 @@
 				7CC03AD3183905AE00DC6691 /* InfoPlist.strings */,
 				7CC03AD6183905AE00DC6691 /* main.m */,
 				7CC03AD8183905AE00DC6691 /* SubscriptionManager-Prefix.pch */,
+				7C12936B1874102000BD960C /* beep.aiff */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -538,6 +545,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C403DBE1871846400486A65 /* ProductIdentifiers.plist in Resources */,
+				7C12936C1874102000BD960C /* beep.aiff in Resources */,
 				7CC03AD5183905AE00DC6691 /* InfoPlist.strings in Resources */,
 				7CC03ADD183905AE00DC6691 /* Images.xcassets in Resources */,
 			);
