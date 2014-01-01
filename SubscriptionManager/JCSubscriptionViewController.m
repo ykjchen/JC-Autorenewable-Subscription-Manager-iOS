@@ -151,7 +151,7 @@ void ShowAlert(NSString *title, NSString *message)
 {
     static NSNumber *wasSubscribed = nil;
     BOOL isSubscribed = [[JCSubscriptionManager sharedManager] isSubscriptionActive];
-    if (wasSubscribed && wasSubscribed.boolValue == isSubscribed) {
+    if (wasSubscribed && !isSubscribed && wasSubscribed.boolValue == isSubscribed) {
         return;
     }
     wasSubscribed = @(isSubscribed);
