@@ -233,7 +233,9 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
         [[NSNotificationCenter defaultCenter] postNotificationName:JCSubscriptionWasMadeNotification object:nil];
     }
     
-    JCLog(@"Subscription status changed to %i.", isSubscribed);
+    if (isSubscribed != wasSubscribed) {
+        JCLog(@"Subscription status changed to %i.", isSubscribed);
+    }
     
     return returnValue;
 }
