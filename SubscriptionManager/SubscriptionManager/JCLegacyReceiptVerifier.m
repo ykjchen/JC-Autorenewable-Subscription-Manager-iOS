@@ -325,7 +325,7 @@ didReceiveResponse:(NSURLResponse *)response
         if (expirationIntervalInReceipt > expirationIntervalSince1970.doubleValue) {
             expirationIntervalSince1970 = @(expirationIntervalInReceipt);
             
-            JCLog(@"Found a later expiration interval in latest_receipt: %i", (NSInteger)expirationIntervalInReceipt);
+            JCLog(@"Found a later expiration interval in latest_receipt: %li", (long)expirationIntervalInReceipt);
         }
     }
 
@@ -333,7 +333,7 @@ didReceiveResponse:(NSURLResponse *)response
     [self.delegate receiptVerifier:self
                 verifiedExpiration:expirationIntervalSince1970];
     
-    JCLog(@"Verified receipt with status:%@ expirationInterval:%@ now:%i", statusString, expirationIntervalSince1970, (NSInteger)[[NSDate date] timeIntervalSince1970]);
+    JCLog(@"Verified receipt with status:%@ expirationInterval:%@ now:%li", statusString, expirationIntervalSince1970, (long)[[NSDate date] timeIntervalSince1970]);
 }
 
 - (void)connection:(NSURLConnection *)connection
@@ -392,23 +392,19 @@ didReceiveResponse:(NSURLResponse *)response
         return 0.0;
     }
     
-    NSError *error;
-    NSDictionary *receiptDictionary = [NSJSONSerialization JSONObjectWithData:receipt
-                                                                      options:NSJSONReadingAllowFragments
-                                                                        error:&error];
-    if (!receiptDictionary) {
-        JCLog(@"JSON serialization failed with error: %@", error.localizedDescription);
-        return 0.0;
-    }
-    
-    if ([[receiptDictionary objectForKey:@"receipt"] objectForKey:@"expires_date"]) {
-        // stored in milliseconds
-        NSTimeInterval expirationInterval = [[[receiptDictionary objectForKey:@"receipt"] objectForKey:@"expires_date"] doubleValue]/1000.0;
-        return expirationInterval;
-	} else {
+    NSDictionary *receiptDict = [receipt plistDictionary];
+    NSString *base64EncodedPurchaseInfo = [receiptDict objectForKey:@"purchase-info"];
+    NSData *decodedPurchaseData = [NSData dataFromBase64String:base64EncodedPurchaseInfo];
+
+    NSDictionary *purchaseInfo = [decodedPurchaseData plistDictionary];
+    NSNumber *expires_date = [purchaseInfo objectForKey:@"expires-date"];
+    if (!expires_date) {
         JCLog(@"Value not found for expires_date.");
         return 0.0;
     }
+    
+    NSTimeInterval expirationInterval = [expires_date doubleValue] / 1000.0; // value is in milliseconds
+    return expirationInterval;
 }
 
 #pragma mark - Testing
@@ -444,6 +440,26 @@ didReceiveResponse:(NSURLResponse *)response
     }
     
     return [self substringWithRange:NSMakeRange(hostStartLocation, endLocation - hostStartLocation)];
+}
+
+@end
+
+@implementation NSData (JCLegacyReceiptVerifier)
+
+- (NSDictionary *)plistDictionary
+{
+    NSError *error;
+    NSDictionary *parsedDictionary = [NSPropertyListSerialization propertyListWithData:self
+                                                                               options:NSPropertyListImmutable
+                                                                                format:nil
+                                                                                 error:&error];
+    if (!parsedDictionary)
+    {
+        JCLog(@"Couldn't convert data to plist: %@", error.localizedDescription);
+        return nil;
+    }
+    
+    return parsedDictionary;
 }
 
 @end

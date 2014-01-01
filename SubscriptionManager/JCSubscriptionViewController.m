@@ -323,7 +323,7 @@ void ShowAlert(NSString *title, NSString *message)
 - (NSString *)durationFromDate:(NSDate *)fromDate
 {
     NSInteger interval = (NSInteger)[[NSDate date] timeIntervalSinceDate:fromDate];
-    return [NSString stringWithFormat:@"%li:%02li", interval / 60, interval % 60];
+    return [NSString stringWithFormat:@"%i:%02i", (int)(interval / 60), (int)(interval % 60)];
 }
                                                  
 @end
