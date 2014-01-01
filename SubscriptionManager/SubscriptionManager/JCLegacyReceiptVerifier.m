@@ -320,6 +320,13 @@ didReceiveResponse:(NSURLResponse *)response
     if (latestReceiptString) {
         latestReceipt = [NSData dataFromBase64String:latestReceiptString];
         [self.class setLatestReceipt:latestReceipt];
+        
+        NSTimeInterval expirationIntervalInReceipt = [self expirationIntervalFrom1970InReceipt:latestReceipt];
+        if (expirationIntervalInReceipt > expirationIntervalSince1970.doubleValue) {
+            expirationIntervalSince1970 = @(expirationIntervalInReceipt);
+            
+            JCLog(@"Found a later expiration interval in latest_receipt: %i", (NSInteger)expirationIntervalInReceipt);
+        }
     }
 
     // call delegate
@@ -376,6 +383,33 @@ didReceiveResponse:(NSURLResponse *)response
     [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
  }
  */
+
+#pragma mark - Receipt Info
+
+- (NSTimeInterval)expirationIntervalFrom1970InReceipt:(NSData *)receipt
+{
+    if (!receipt) {
+        return 0.0;
+    }
+    
+    NSError *error;
+    NSDictionary *receiptDictionary = [NSJSONSerialization JSONObjectWithData:receipt
+                                                                      options:NSJSONReadingAllowFragments
+                                                                        error:&error];
+    if (!receiptDictionary) {
+        JCLog(@"JSON serialization failed with error: %@", error.localizedDescription);
+        return 0.0;
+    }
+    
+    if ([[receiptDictionary objectForKey:@"receipt"] objectForKey:@"expires_date"]) {
+        // stored in milliseconds
+        NSTimeInterval expirationInterval = [[[receiptDictionary objectForKey:@"receipt"] objectForKey:@"expires_date"] doubleValue]/1000.0;
+        return expirationInterval;
+	} else {
+        JCLog(@"Value not found for expires_date.");
+        return 0.0;
+    }
+}
 
 #pragma mark - Testing
 
