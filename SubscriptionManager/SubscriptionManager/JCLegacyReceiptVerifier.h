@@ -43,4 +43,10 @@
 
 @end
 
+@interface NSData (JCLegacyReceiptVerifier)
+
+- (NSDictionary *)plistDictionary;
+
+@end
+
 

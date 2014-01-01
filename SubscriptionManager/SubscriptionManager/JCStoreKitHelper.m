@@ -29,7 +29,7 @@
 
 @end
 
-NSTimeInterval kProductRequestRetryInterval = 60.0;
+NSTimeInterval kProductRequestRetryInterval = 15.0;
 
 @implementation JCStoreKitHelper
 

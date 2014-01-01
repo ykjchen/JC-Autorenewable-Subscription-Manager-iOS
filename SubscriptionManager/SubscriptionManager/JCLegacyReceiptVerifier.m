@@ -27,21 +27,18 @@
 @property (strong, nonatomic) NSMutableArray *receiptsAwaitingVerification;
 @property (strong, nonatomic) NSMutableArray *receiptsBeingVerified;
 @property (strong, nonatomic) NSTimer *verificationRetryTimer;
-@property (nonatomic, getter = isMonitoringInternet) BOOL monitoringInternet;
 
 @end
 
 // If an error is encountered during verification,
 // the verifier will retry verification this many seconds later.
-NSTimeInterval const kVerificationRetryInterval = 60.0;
+NSTimeInterval const kVerificationRetryInterval = 15.0;
 NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 
 @implementation JCLegacyReceiptVerifier
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     // In case the timer is still going.
     if (_verificationRetryTimer) {
         [_verificationRetryTimer invalidate];
@@ -97,36 +94,6 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
         [reachability startNotifier];
     }
     self.reachabilities = [NSDictionary dictionaryWithDictionary:reachabilities];
-    self.monitoringInternet = YES;
-}
-
-- (void)startMonitoringInternet
-{
-    if (self.isMonitoringInternet) {
-        return;
-    }
-    self.monitoringInternet = YES;
-
-    for (Reachability *reachability in [self.reachabilities allValues]) {
-        [reachability startNotifier];
-    }
-}
-
-- (void)stopMonitoringInternet
-{
-    if (!self.isMonitoringInternet) {
-        return;
-    }
-    self.monitoringInternet = NO;
-    
-    for (Reachability *reachability in [self.reachabilities allValues]) {
-        [reachability stopNotifier];
-    }
-}
-
-- (BOOL)canStopMonitoringInternet
-{
-    return (self.receiptsAwaitingVerification.count == 0);
 }
 
 #pragma mark - Verification Server
@@ -197,7 +164,7 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
         postDataString = [NSString stringWithFormat:@"receipt-data=%@&sandbox=%i", receiptDataString, SANDBOX_MODE];
     }
     
-	NSString *length = [NSString stringWithFormat:@"%d", [postDataString length]];
+	NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[postDataString length]];
 	[request setValue:length forHTTPHeaderField:@"Content-Length"];
 	
 	[request setHTTPBody:[postDataString dataUsingEncoding:NSASCIIStringEncoding]];
@@ -257,8 +224,6 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 
 - (void)verifyReceipt:(NSData *)receipt
 {
-    [self startMonitoringInternet];
-    
     // add to queue (in case something keeps verification from happening)
     if (![self.receiptsAwaitingVerification containsObject:receipt]) {
         [self.receiptsAwaitingVerification addObject:receipt];
@@ -318,10 +283,6 @@ didReceiveResponse:(NSURLResponse *)response
     
     [self.receiptsBeingVerified removeObject:receipt];
     
-    if ([self canStopMonitoringInternet]) {
-        [self stopMonitoringInternet];
-    }
-
     if (!self.delegate ||
         ![self.delegate conformsToProtocol:@protocol(JCReceiptVerifierDelegate)] ||
         ![self.delegate respondsToSelector:@selector(receiptVerifier:verifiedExpiration:)]) {
@@ -359,13 +320,20 @@ didReceiveResponse:(NSURLResponse *)response
     if (latestReceiptString) {
         latestReceipt = [NSData dataFromBase64String:latestReceiptString];
         [self.class setLatestReceipt:latestReceipt];
+        
+        NSTimeInterval expirationIntervalInReceipt = [self expirationIntervalFrom1970InReceipt:latestReceipt];
+        if (expirationIntervalInReceipt > expirationIntervalSince1970.doubleValue) {
+            expirationIntervalSince1970 = @(expirationIntervalInReceipt);
+            
+            JCLog(@"Found a later expiration interval in latest_receipt: %li", (long)expirationIntervalInReceipt);
+        }
     }
 
     // call delegate
     [self.delegate receiptVerifier:self
                 verifiedExpiration:expirationIntervalSince1970];
     
-    JCLog(@"Verified receipt with status:%@ expirationInterval:%@", statusString, expirationIntervalSince1970);
+    JCLog(@"Verified receipt with status:%@ expirationInterval:%@ now:%li", statusString, expirationIntervalSince1970, (long)[[NSDate date] timeIntervalSince1970]);
 }
 
 - (void)connection:(NSURLConnection *)connection
@@ -416,6 +384,29 @@ didReceiveResponse:(NSURLResponse *)response
  }
  */
 
+#pragma mark - Receipt Info
+
+- (NSTimeInterval)expirationIntervalFrom1970InReceipt:(NSData *)receipt
+{
+    if (!receipt) {
+        return 0.0;
+    }
+    
+    NSDictionary *receiptDict = [receipt plistDictionary];
+    NSString *base64EncodedPurchaseInfo = [receiptDict objectForKey:@"purchase-info"];
+    NSData *decodedPurchaseData = [NSData dataFromBase64String:base64EncodedPurchaseInfo];
+
+    NSDictionary *purchaseInfo = [decodedPurchaseData plistDictionary];
+    NSNumber *expires_date = [purchaseInfo objectForKey:@"expires-date"];
+    if (!expires_date) {
+        JCLog(@"Value not found for expires_date.");
+        return 0.0;
+    }
+    
+    NSTimeInterval expirationInterval = [expires_date doubleValue] / 1000.0; // value is in milliseconds
+    return expirationInterval;
+}
+
 #pragma mark - Testing
 
 - (void)clearPurchaseInfo
@@ -449,6 +440,26 @@ didReceiveResponse:(NSURLResponse *)response
     }
     
     return [self substringWithRange:NSMakeRange(hostStartLocation, endLocation - hostStartLocation)];
+}
+
+@end
+
+@implementation NSData (JCLegacyReceiptVerifier)
+
+- (NSDictionary *)plistDictionary
+{
+    NSError *error;
+    NSDictionary *parsedDictionary = [NSPropertyListSerialization propertyListWithData:self
+                                                                               options:NSPropertyListImmutable
+                                                                                format:nil
+                                                                                 error:&error];
+    if (!parsedDictionary)
+    {
+        JCLog(@"Couldn't convert data to plist: %@", error.localizedDescription);
+        return nil;
+    }
+    
+    return parsedDictionary;
 }
 
 @end

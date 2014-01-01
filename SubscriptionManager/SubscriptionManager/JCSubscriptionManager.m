@@ -156,7 +156,16 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
 
     // If valid expiration date is found/saved, user is subscribed.
     NSNumber *expirationInterval = [self subscriptionExpirationIntervalSince1970];
-    return (expirationInterval && expirationInterval.doubleValue > [[NSDate date] timeIntervalSince1970]);
+    if (expirationInterval) {
+        if (expirationInterval.doubleValue > [[NSDate date] timeIntervalSince1970]) {
+            return YES;
+        } else {
+            [self setSubscriptionExpirationIntervalSince1970:nil];
+            return NO;
+        }
+    }
+    
+    return NO;
 }
 
 - (BOOL)buyProductWithIdentifier:(NSString *)productIdentifier
@@ -231,6 +240,10 @@ NSString *const kLockboxSubscriptionExpirationIntervalKey = @"subscription-expir
         [[NSNotificationCenter defaultCenter] postNotificationName:JCSubscriptionExpiredNotification object:nil];
     } else if (isSubscribed && !wasSubscribed) {
         [[NSNotificationCenter defaultCenter] postNotificationName:JCSubscriptionWasMadeNotification object:nil];
+    }
+    
+    if (isSubscribed != wasSubscribed) {
+        JCLog(@"Subscription status changed to %i.", isSubscribed);
     }
     
     return returnValue;

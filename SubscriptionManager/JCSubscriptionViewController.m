@@ -10,13 +10,17 @@
 
 #import "JCSubscriptionManager.h"
 
+#import <AudioToolbox/AudioToolbox.h>
+
 @interface JCSubscriptionViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UILabel *statusLabel;
 @property (strong, nonatomic) UITableView *productTableView;
 @property (strong, nonatomic) UIButton *restoreButton;
 @property (strong, nonatomic) JCActivityView *activityView;
+
 @property (strong, nonatomic) NSTimer *statusUpdateTimer;
+@property (nonatomic) NSDate *subscribedDate;
 
 @end
 
@@ -145,14 +149,19 @@ void ShowAlert(NSString *title, NSString *message)
 
 - (void)updateStatus
 {
+    static NSNumber *wasSubscribed = nil;
     BOOL isSubscribed = [[JCSubscriptionManager sharedManager] isSubscriptionActive];
+    if (wasSubscribed && !isSubscribed && wasSubscribed.boolValue == isSubscribed) {
+        return;
+    }
+    wasSubscribed = @(isSubscribed);
     
     self.restoreButton.enabled = !isSubscribed;
     self.productTableView.userInteractionEnabled = !isSubscribed;
 
     NSString *statusText;
     if (isSubscribed) {
-        statusText = @"Subscribed";
+        statusText = [NSString stringWithFormat:@"Subscribed %@", [self durationFromDate:self.subscribedDate]];
         self.productTableView.alpha = 0.5f;
     } else {
         statusText = @"Not Subscribed";
@@ -161,7 +170,7 @@ void ShowAlert(NSString *title, NSString *message)
     self.statusLabel.text = [@"Status: " stringByAppendingString:statusText];
     
     if (!isSubscribed && !self.statusUpdateTimer) {
-        self.statusUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+        self.statusUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                                   target:self
                                                                 selector:@selector(updateStatus)
                                                                 userInfo:nil
@@ -280,6 +289,14 @@ void ShowAlert(NSString *title, NSString *message)
 
 #pragma mark - Notifications
 
+- (void)beep
+{
+    SystemSoundID soundID;
+    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"beep" ofType:@"aiff"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:soundFile], &soundID);
+    AudioServicesPlayAlertSound(soundID);
+}
+
 - (void)receivedProductDataWasFetchedNotification:(NSNotification *)notification
 {
     [self.productTableView reloadData];
@@ -287,14 +304,28 @@ void ShowAlert(NSString *title, NSString *message)
 
 - (void)receivedSubscriptionWasMadeNotification:(NSNotification *)notification
 {
+    [self beep];
+    self.subscribedDate = [NSDate date];
+    ShowAlert(nil, @"Received subscribed notification.");
+    
     [self updateStatus];
 }
 
 - (void)receivedSubscriptionExpiredNotification:(NSNotification *)notification
 {
+    [self beep];
+    ShowAlert(@"Received Expired Notification", [NSString stringWithFormat:@"Time subscribed: %@", [self durationFromDate:self.subscribedDate]]);
+    self.subscribedDate = nil;
+    
     [self updateStatus];
 }
 
+- (NSString *)durationFromDate:(NSDate *)fromDate
+{
+    NSInteger interval = (NSInteger)[[NSDate date] timeIntervalSinceDate:fromDate];
+    return [NSString stringWithFormat:@"%i:%02i", (int)(interval / 60), (int)(interval % 60)];
+}
+                                                 
 @end
 
 #pragma mark - Activity Indicator View

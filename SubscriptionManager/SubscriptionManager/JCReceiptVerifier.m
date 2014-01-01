@@ -6,6 +6,8 @@
 
 #import "JCReceiptVerifier.h"
 
+#import "JCSubscriptionManager.h"
+
 // for < iOS7
 #import "JCLegacyReceiptVerifier.h"
 
@@ -77,6 +79,8 @@ static NSNumber *_appReceiptAvailable = nil;
 
 - (void)checkForRenewedSubscription
 {
+    JCLog(@"Checking if renewed subscription available.");
+    
     if (![self.class isAppReceiptAvailable]) {
         [self.legacyReceiptVerifier verifyLatestReceipt];
     } else {
