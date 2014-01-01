@@ -27,21 +27,18 @@
 @property (strong, nonatomic) NSMutableArray *receiptsAwaitingVerification;
 @property (strong, nonatomic) NSMutableArray *receiptsBeingVerified;
 @property (strong, nonatomic) NSTimer *verificationRetryTimer;
-@property (nonatomic, getter = isMonitoringInternet) BOOL monitoringInternet;
 
 @end
 
 // If an error is encountered during verification,
 // the verifier will retry verification this many seconds later.
-NSTimeInterval const kVerificationRetryInterval = 60.0;
+NSTimeInterval const kVerificationRetryInterval = 15.0;
 NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 
 @implementation JCLegacyReceiptVerifier
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     // In case the timer is still going.
     if (_verificationRetryTimer) {
         [_verificationRetryTimer invalidate];
@@ -54,11 +51,6 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
     self = [super init];
     if (self) {
         [self setUpReachabilities];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(receivedSubscriptionExpiredNotification:)
-                                                     name:JCSubscriptionExpiredNotification
-                                                   object:nil];
     }
     return self;
 }
@@ -102,41 +94,6 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
         [reachability startNotifier];
     }
     self.reachabilities = [NSDictionary dictionaryWithDictionary:reachabilities];
-    self.monitoringInternet = YES;
-}
-
-- (void)startMonitoringInternet
-{
-    if (self.isMonitoringInternet) {
-        return;
-    }
-    self.monitoringInternet = YES;
-
-    for (Reachability *reachability in [self.reachabilities allValues]) {
-        [reachability startNotifier];
-    }
-}
-
-- (void)stopMonitoringInternet
-{
-    if (!self.isMonitoringInternet) {
-        return;
-    }
-    self.monitoringInternet = NO;
-    
-    for (Reachability *reachability in [self.reachabilities allValues]) {
-        [reachability stopNotifier];
-    }
-}
-
-- (BOOL)canStopMonitoringInternet
-{
-    return (self.receiptsAwaitingVerification.count == 0);
-}
-
-- (void)receivedSubscriptionExpiredNotification:(NSNotification *)notification
-{
-    [self startMonitoringInternet];
 }
 
 #pragma mark - Verification Server
@@ -267,8 +224,6 @@ NSString *const kLockboxLatestReceiptKey = @"latest-receipt";
 
 - (void)verifyReceipt:(NSData *)receipt
 {
-    [self startMonitoringInternet];
-    
     // add to queue (in case something keeps verification from happening)
     if (![self.receiptsAwaitingVerification containsObject:receipt]) {
         [self.receiptsAwaitingVerification addObject:receipt];
@@ -328,10 +283,6 @@ didReceiveResponse:(NSURLResponse *)response
     
     [self.receiptsBeingVerified removeObject:receipt];
     
-    if ([self canStopMonitoringInternet]) {
-        [self stopMonitoringInternet];
-    }
-
     if (!self.delegate ||
         ![self.delegate conformsToProtocol:@protocol(JCReceiptVerifierDelegate)] ||
         ![self.delegate respondsToSelector:@selector(receiptVerifier:verifiedExpiration:)]) {
@@ -375,7 +326,7 @@ didReceiveResponse:(NSURLResponse *)response
     [self.delegate receiptVerifier:self
                 verifiedExpiration:expirationIntervalSince1970];
     
-    JCLog(@"Verified receipt with status:%@ expirationInterval:%@", statusString, expirationIntervalSince1970);
+    JCLog(@"Verified receipt with status:%@ expirationInterval:%@ now:%i", statusString, expirationIntervalSince1970, (NSInteger)[[NSDate date] timeIntervalSince1970]);
 }
 
 - (void)connection:(NSURLConnection *)connection
